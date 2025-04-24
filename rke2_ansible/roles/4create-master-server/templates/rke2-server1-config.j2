@@ -2,9 +2,11 @@ write-kubeconfig-mode: "0644"
 token: {{ rke2_secret_token }}
 tls-san:
   - {{ vip }}
-  - {{ hostvars['server1']['ansible_host'] }}
-  - {{ hostvars['server2']['ansible_host'] }}
-  - {{ hostvars['server3']['ansible_host'] }}
+  {%- for server in groups['servers'] %}
+
+  - {{ hostvars[server]['ansible_host'] }}
+  {%- endfor %}
+
 node-label:
   - server=true
 disable:

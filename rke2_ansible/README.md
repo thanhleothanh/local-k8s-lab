@@ -6,4 +6,4 @@
 
 ## Configurations
 
-Remember to change checkout and change variables in `./group_vars/all.yaml`
+Remember to change checkout and change variables in `inventory/group_vars/all.yaml` and `inventory/hosts.ini`
