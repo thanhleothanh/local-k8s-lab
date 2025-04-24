@@ -1,0 +1,44 @@
+# run with vmware_fusion
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-24.04"
+  config.vm.box_version = "202502.21.0"
+
+  # VMware Fusion provider configuration
+  config.vm.provider "vmware_fusion" do |vb|
+    vb.vmx["memsize"] = "4096"   # Memory in MB
+    vb.vmx["numvcpus"] = "2"     # Number of CPUs
+  end
+
+  # Define the first Ubuntu VM
+  config.vm.define "ubuntu-01" do |ubuntu|
+    ubuntu.vm.hostname = "ubuntu-01"
+    ubuntu.vm.network "private_network", ip: "192.168.33.10"
+    ubuntu.vm.provision "shell", path: "scripts/startup.sh"
+    ubuntu.vm.provision "shell", path: "scripts/install-dependencies.sh", run: "once"
+  end
+
+  # Define the second Ubuntu VM
+  config.vm.define "ubuntu-02" do |ubuntu|
+    ubuntu.vm.hostname = "ubuntu-02"
+    ubuntu.vm.network "private_network", ip: "192.168.33.11"
+    ubuntu.vm.provision "shell", path: "scripts/startup.sh"
+    ubuntu.vm.provision "shell", path: "scripts/install-dependencies.sh", run: "once"
+  end
+
+  # Define the third Ubuntu VM
+  config.vm.define "ubuntu-03" do |ubuntu|
+    ubuntu.vm.hostname = "ubuntu-03"
+    ubuntu.vm.network "private_network", ip: "192.168.33.12"
+    ubuntu.vm.provision "shell", path: "scripts/startup.sh"
+    ubuntu.vm.provision "shell", path: "scripts/install-dependencies.sh", run: "once"
+  end
+
+  # Define the third Ubuntu VM
+  config.vm.define "ubuntu-04" do |ubuntu|
+    ubuntu.vm.hostname = "ubuntu-04"
+    ubuntu.vm.network "private_network", ip: "192.168.33.13"
+    ubuntu.vm.provision "shell", path: "scripts/startup.sh"
+    ubuntu.vm.provision "shell", path: "scripts/install-dependencies.sh", run: "once"
+  end
+end

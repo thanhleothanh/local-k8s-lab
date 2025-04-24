@@ -1,0 +1,29 @@
+- name: Create directory for Kube VIP Manifest
+  ansible.builtin.file:
+    path: '/var/lib/rancher/rke2/server/manifests'
+    state: directory
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  when: inventory_hostname in groups['servers']
+
+- name: Deploy Kube VIP Configuration
+  ansible.builtin.template:
+    src: templates/kube-vip-config.j2
+    dest: /var/lib/rancher/rke2/server/manifests/kube-vip.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  when: inventory_hostname == groups['servers'][0]
+
+- name: Download Kube VIP RBAC config
+  ansible.builtin.get_url:
+    url: 'https://kube-vip.io/manifests/rbac.yaml'
+    dest: /var/lib/rancher/rke2/server/manifests/rbac.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  when: inventory_hostname == groups['servers'][0]

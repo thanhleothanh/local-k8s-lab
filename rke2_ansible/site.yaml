@@ -1,0 +1,37 @@
+- name: Prepare all nodes
+  hosts: servers,agents
+  gather_facts: false
+  become: true
+  roles:
+    - 1prepare-nodes
+    - 2download-rke2
+
+- name: Prepare Kube VIP
+  hosts: servers
+  gather_facts: true
+  roles:
+    - 3prepare-kube-vip
+
+- name: Create master controller plane (server1)
+  hosts: servers,agents
+  gather_facts: true
+  roles:
+    - 4create-master-server
+
+- name: Add additional RKE2 Servers
+  hosts: servers
+  gather_facts: true
+  roles:
+    - 5add-server
+
+- name: Add additional RKE2 Agents
+  hosts: agents
+  gather_facts: true
+  roles:
+    - 6add-agent
+
+- name: Apply manifests after cluster is created
+  hosts: servers
+  gather_facts: true
+  roles:
+    - 7apply-metallb

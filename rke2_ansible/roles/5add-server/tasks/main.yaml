@@ -1,0 +1,33 @@
+- name: Create directory for RKE2 config
+  ansible.builtin.file:
+    path: '/etc/rancher/rke2'
+    state: directory
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  when: inventory_hostname != groups['servers'][0]
+
+- name: Deploy RKE2 server Configuration
+  ansible.builtin.template:
+    src: templates/rke2-server-config.j2
+    dest: /etc/rancher/rke2/config.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  when: inventory_hostname != groups['servers'][0]
+
+- name: Enable RKE2 server service to start on boot
+  ansible.builtin.systemd:
+    name: rke2-server
+    enabled: yes
+  become: true
+  when: inventory_hostname != groups['servers'][0]
+
+- name: Start RKE2 server service
+  ansible.builtin.systemd:
+    name: rke2-server
+    state: started
+  become: true
+  when: inventory_hostname != groups['servers'][0]

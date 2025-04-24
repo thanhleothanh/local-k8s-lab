@@ -1,0 +1,11 @@
+- name: Download and run official RKE2 install script with a specific version for servers
+  ansible.builtin.shell:
+    cmd: curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION="{{ rke2_version }}" INSTALL_RKE2_TYPE="server" sh -
+  become: true
+  when: inventory_hostname in groups['servers']
+
+- name: Download and run official RKE2 install script with a specific version for agents
+  ansible.builtin.shell:
+    cmd: curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION="{{ rke2_version }}" INSTALL_RKE2_TYPE="agent" sh -
+  become: true
+  when: inventory_hostname in groups['agents']
