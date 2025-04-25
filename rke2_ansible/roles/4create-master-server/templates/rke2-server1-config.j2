@@ -12,3 +12,5 @@ node-label:
 disable:
   - rke2-ingress-nginx
 cni: {{ rke2_cni_plugin }}
+node-taint:
+  - "CriticalAddonsOnly=true:NoExecute"

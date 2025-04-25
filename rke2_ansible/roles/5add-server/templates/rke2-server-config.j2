@@ -11,3 +11,5 @@ tls-san:
 node-label:
   - server=true
 cni: {{ rke2_cni_plugin }}
+node-taint:
+  - "CriticalAddonsOnly=true:NoExecute"
