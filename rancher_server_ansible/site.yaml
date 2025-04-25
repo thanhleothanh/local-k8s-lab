@@ -1,0 +1,5 @@
+- name: Provision rancher server
+  hosts: rancher
+  gather_facts: true
+  roles:
+    - provision-rancher-server
