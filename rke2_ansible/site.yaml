@@ -17,3 +17,9 @@
   gather_facts: true
   roles:
     - 3provision
+
+- name: Post Provision
+  hosts: servers
+  gather_facts: true
+  roles:
+    - 4post-provision
