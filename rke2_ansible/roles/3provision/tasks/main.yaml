@@ -1,0 +1,8 @@
+- name: 2.1 create-master-server.yaml
+  include_tasks: create-master-server.yaml
+
+- name: 2.2 add-server.yaml
+  include_tasks: add-server.yaml
+
+- name: 2.3 add-agent.yaml
+  include_tasks: add-agent.yaml
