@@ -6,7 +6,7 @@
     group: root
     mode: '0644'
   become: true
-  when: inventory_hostname != groups['servers'][0]
+  when: inventory_hostname in groups['servers'] and inventory_hostname != groups['servers'][0]
 
 - name: Deploy RKE2 server Configuration
   ansible.builtin.template:
@@ -16,18 +16,18 @@
     group: root
     mode: '0644'
   become: true
-  when: inventory_hostname != groups['servers'][0]
+  when: inventory_hostname in groups['servers'] and inventory_hostname != groups['servers'][0]
 
 - name: Enable RKE2 server service to start on boot
   ansible.builtin.systemd:
     name: rke2-server
     enabled: yes
   become: true
-  when: inventory_hostname != groups['servers'][0]
+  when: inventory_hostname in groups['servers'] and inventory_hostname != groups['servers'][0]
 
 - name: Start RKE2 server service
   ansible.builtin.systemd:
     name: rke2-server
     state: started
   become: true
-  when: inventory_hostname != groups['servers'][0]
+  when: inventory_hostname in groups['servers'] and inventory_hostname != groups['servers'][0]

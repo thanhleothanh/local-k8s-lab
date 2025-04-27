@@ -1,0 +1,5 @@
+- name: 3.1 install-helm-cli.yaml
+  include_tasks: install-helm-cli.yaml
+
+- name: 3.2 helm-kubevip.yaml
+  include_tasks: helm-kubevip.yaml

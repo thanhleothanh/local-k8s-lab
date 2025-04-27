@@ -1,0 +1,40 @@
+- name: Add repo kube-vip
+  ansible.builtin.command:
+    cmd: helm repo add kube-vip https://kube-vip.github.io/helm-charts
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]
+
+- name: Update repo
+  ansible.builtin.command:
+    cmd: helm repo update
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]
+
+- name: Copy kube-vip helm configuration file to user home
+  ansible.builtin.template:
+    src: templates/kubevip-config.j2
+    dest: /home/{{ ansible_user }}/kubevip-config.yaml
+    mode: '0644'
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]
+
+- name: Helm install kube-vip
+  ansible.builtin.command:
+    cmd: helm upgrade --install kube-vip kube-vip/kube-vip -n kube-system -f /home/{{ ansible_user }}/kubevip-config.yaml --wait
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]
+
+- name: Wait for all pods to come up
+  ansible.builtin.command:
+    cmd: kubectl wait --namespace kube-system --for=condition=ready pods --selector=app.kubernetes.io/instance=kube-vip --timeout=10s
+  retries: 60
+  delay: 10
+  changed_when: true
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]
+
+- name: Change kubeconfig server address to kube-vip
+  ansible.builtin.command:
+    cmd: kubectl config set-cluster default --server=https://{{ vip_address }}:6443 --kubeconfig=/home/{{ ansible_user }}/.kube/config
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]

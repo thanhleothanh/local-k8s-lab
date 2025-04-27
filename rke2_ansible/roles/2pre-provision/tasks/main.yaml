@@ -1,0 +1,2 @@
+- name: 2.1 download-rke2.yaml
+  include_tasks: download-rke2.yaml
