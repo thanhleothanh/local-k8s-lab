@@ -12,3 +12,4 @@ vip_address: 192.168.33.100
 rke2_version: 'v1.31.7+rke2r1	'
 rke2_cni_plugin: 'calico'
 rke2_secret_token: 'supersecret'
+ingress_nginx_helm_chart_version: '4.12.1'

@@ -4,6 +4,12 @@
   become: true
   when: inventory_hostname == groups['servers'][0]
 
+- name: Helm add repo Ingress Nginx
+  ansible.builtin.command:
+    cmd: helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]
+
 - name: Update repo
   ansible.builtin.command:
     cmd: helm repo update
