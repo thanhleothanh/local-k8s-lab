@@ -1,6 +1,6 @@
 - name: Helm install Ingress Nginx
   ansible.builtin.shell:
-    cmd: helm install ingress-nginx ingress-nginx/ingress-nginx --version="{{ ingress_nginx_helm_chart_version }}" --namespace ingress-nginx --create-namespace --set controller.service.type=NodePort --set controller.service.nodePorts.http=30080 --set controller.service.nodePorts.https=30443
+    cmd: helm install ingress-nginx ingress-nginx/ingress-nginx --version="{{ ingress_nginx_helm_chart_version }}" --namespace ingress-nginx --create-namespace --set controller.kind=DaemonSet --set controller.service.type=NodePort --set controller.service.nodePorts.http=30080 --set controller.service.nodePorts.https=30443
   become_user: '{{ ansible_user }}'
   when: inventory_hostname == groups['servers'][0]
 
