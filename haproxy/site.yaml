@@ -1,0 +1,5 @@
+- name: Provision HAProxy + Keepalived
+  hosts: haproxy
+  gather_facts: true
+  roles:
+    - provision

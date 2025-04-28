@@ -1,0 +1,5 @@
+- name: 1 install-keepalived.yaml
+  include_tasks: install-keepalived.yaml
+
+- name: 2 install-haproxy.yaml
+  include_tasks: install-haproxy.yaml

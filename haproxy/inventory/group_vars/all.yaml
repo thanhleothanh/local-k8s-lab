@@ -1,0 +1,4 @@
+---
+ansible_user: vagrant
+vip_address: 192.168.33.200
+vip_interface: eth1
