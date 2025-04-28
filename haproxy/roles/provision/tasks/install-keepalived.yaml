@@ -1,0 +1,38 @@
+- name: Download keepalived
+  ansible.builtin.shell:
+    cmd: apt install keepalived -y
+  become: true
+
+- name: Copy keepalived config file for master server
+  ansible.builtin.template:
+    src: templates/master-keepalived-config.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  when: inventory_hostname == groups['haproxy'][0]
+
+- name: Copy keepalived config file for backup servers
+  ansible.builtin.template:
+    src: templates/master-keepalived-config.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  when: inventory_hostname != groups['haproxy'][0]
+
+- name: Start keepalived service on master server
+  ansible.builtin.systemd_service:
+    name: keepalived
+    state: reloaded
+  become: true
+  when: inventory_hostname == groups['haproxy'][0]
+
+- name: Start keepalived service on backup servers
+  ansible.builtin.systemd_service:
+    name: keepalived
+    state: reloaded
+  become: true
+  when: inventory_hostname != groups['haproxy'][0]
