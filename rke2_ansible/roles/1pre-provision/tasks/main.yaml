@@ -1,0 +1,8 @@
+- name: 1.1 prepare-nodes.yaml
+  include_tasks: prepare-nodes.yaml
+
+- name: 1.2 download-rke2.yaml
+  include_tasks: download-rke2.yaml
+
+- name: 1.3 prepare-kubevip.yaml
+  include_tasks: prepare-kubevip.yaml

@@ -1,25 +1,18 @@
-- name: Prepare
-  hosts: servers,agents
-  gather_facts: true
-  become: true
-  roles:
-    - 1prepare
-
 - name: Pre Provision
   hosts: servers,agents
   gather_facts: true
   become: true
   roles:
-    - 2pre-provision
+    - 1pre-provision
 
 - name: Provision
   hosts: servers,agents
   gather_facts: true
   roles:
-    - 3provision
+    - 2provision
 
 - name: Post Provision
   hosts: servers,agents
   gather_facts: true
   roles:
-    - 4post-provision
+    - 3post-provision
