@@ -3,3 +3,9 @@
     cmd: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -
   become: true
   when: inventory_hostname == groups['servers'][0]
+
+- name: Update repo
+  ansible.builtin.command:
+    cmd: helm repo update
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]

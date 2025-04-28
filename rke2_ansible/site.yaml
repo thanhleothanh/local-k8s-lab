@@ -19,7 +19,7 @@
     - 3provision
 
 - name: Post Provision
-  hosts: servers
+  hosts: servers,agents
   gather_facts: true
   roles:
     - 4post-provision
