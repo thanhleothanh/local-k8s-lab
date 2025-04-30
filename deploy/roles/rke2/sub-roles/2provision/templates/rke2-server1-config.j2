@@ -1,0 +1,16 @@
+write-kubeconfig-mode: "0644"
+token: {{ rke2_secret_token }}
+tls-san:
+  - {{ kube_vip_address }}
+  {%- for server in groups['servers'] %}
+
+  - {{ hostvars[server]['ansible_host'] }}
+  {%- endfor %}
+
+node-label:
+  - server=true
+disable:
+  - rke2-ingress-nginx
+cni: {{ rke2_cni_plugin }}
+node-taint:
+  - "CriticalAddonsOnly=true:NoExecute"
