@@ -1,0 +1,12 @@
+- name: Deploy RKE2 cluster
+  hosts: servers,agents
+  gather_facts: true
+  become: true
+  roles:
+    - rke2
+
+- name: Deploy HAProxy layer
+  hosts: haproxy
+  gather_facts: true
+  roles:
+    - haproxy

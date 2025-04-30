@@ -1,0 +1,25 @@
+---
+os: 'linux'
+arch: 'arm64'
+ansible_user: vagrant
+ansible_become: true
+ansible_become_method: sudo
+
+# kube-vip config, virtual ip for controller planes
+kube_vip_version: 'v0.8.4'
+kube_vip_interface: 'eth1'
+kube_vip_address: 192.168.33.100
+
+rke2_version: 'v1.31.7+rke2r1'
+rke2_cni_plugin: 'calico'
+rke2_secret_token: 'supersecret'
+
+ingress_nginx_helm_chart_version: '4.12.1'
+cert_manager_helm_chart_version: 'v1.17.2'
+rancher_server_helm_chart_version: '2.11.1'
+rancher_server_bootstrap_password: 'supersecret'
+
+# this will be the entrypoint for all the apps in the cluster, can use https://{{ keepalived_vip_address }}.sslip.io
+# from here we can set up ingress resources for subdomains, e.g: https://rancher.{{ keepalived_vip_address }}.sslip.io
+keepalived_vip_address: 192.168.33.200
+keepalived_vip_interface: 'eth1'
