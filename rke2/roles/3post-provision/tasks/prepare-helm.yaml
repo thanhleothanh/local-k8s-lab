@@ -10,6 +10,18 @@
   become_user: '{{ ansible_user }}'
   when: inventory_hostname == groups['servers'][0]
 
+- name: Helm add repo Jetstack
+  ansible.builtin.command:
+    cmd: helm repo add jetstack https://charts.jetstack.io
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]
+
+- name: Helm add repo Rancher
+  ansible.builtin.command:
+    cmd: helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]
+
 - name: Update repo
   ansible.builtin.command:
     cmd: helm repo update

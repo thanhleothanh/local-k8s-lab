@@ -3,3 +3,6 @@
 
 - name: 3.2 helm-ingress-nginx.yaml
   include_tasks: helm-ingress-nginx.yaml
+
+- name: 3.3 helm-rancher-server.yaml
+  include_tasks: helm-rancher-server.yaml
