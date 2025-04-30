@@ -1,0 +1,16 @@
+- name: Helm install Cert-manager
+  ansible.builtin.shell:
+    cmd: helm upgrade -i cert-manager jetstack/cert-manager --version {{ cert_manager_helm_chart_version }} --create-namespace --namespace cert-manager --set crds.enabled=true
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]
+
+- name: Helm install Rancher
+  ansible.builtin.shell:
+    cmd: helm upgrade -i rancher rancher-stable/rancher --version {{ rancher_server_helm_chart_version }} --create-namespace --namespace cattle-system --set hostname=rancher.{{ keepalived_vip_address }}.sslip.io --set bootstrapPassword={{ rancher_server_bootstrap_password }} --set ingress.ingressClassName=nginx --set replicas=1
+  become_user: '{{ ansible_user }}'
+  when: inventory_hostname == groups['servers'][0]
+
+- name: Successfully deployed Rancher Server
+  debug:
+    msg: 'Visit Rancher at: https://rancher.{{ keepalived_vip_address }}.sslip.io/'
+  when: inventory_hostname == groups['servers'][0]
