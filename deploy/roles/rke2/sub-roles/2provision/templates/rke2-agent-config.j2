@@ -1,6 +1,6 @@
 write-kubeconfig-mode: "0644"
 token: {{ rke2_secret_token }}
 server: https://{{ hostvars[groups['servers'][0]]['ansible_host'] }}:9345
+cni: {{ rke2_cni_plugin }}
 node-label:
   - "agent=true"
-cni: {{ rke2_cni_plugin }}
