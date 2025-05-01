@@ -19,15 +19,15 @@
   when: inventory_hostname in groups['servers'] and inventory_hostname != groups['servers'][0]
 
 - name: Enable RKE2 server service to start on boot
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: rke2-server
     enabled: yes
   become: true
   when: inventory_hostname in groups['servers'] and inventory_hostname != groups['servers'][0]
 
 - name: Start RKE2 server service
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: rke2-server
-    state: started
+    state: reloaded
   become: true
   when: inventory_hostname in groups['servers'] and inventory_hostname != groups['servers'][0]

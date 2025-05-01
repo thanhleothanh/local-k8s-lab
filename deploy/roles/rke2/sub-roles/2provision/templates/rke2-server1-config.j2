@@ -7,10 +7,15 @@ tls-san:
   - {{ hostvars[server]['ansible_host'] }}
   {%- endfor %}
 
+cni: {{ rke2_cni_plugin }}
 node-label:
   - server=true
+  - main-server=true
 disable:
   - rke2-ingress-nginx
-cni: {{ rke2_cni_plugin }}
 node-taint:
   - "CriticalAddonsOnly=true:NoExecute"
+kube-controller-manager-arg:
+  - "node-monitor-grace-period=20s"
+  - "node-monitor-period=5s"
+

@@ -1,8 +1,11 @@
-- name: 3.1 prepare-helm.yaml
+- name: 3.1 prepare-kube-config.yaml
+  include_tasks: prepare-kube-config.yaml
+
+- name: 3.2 prepare-helm.yaml
   include_tasks: prepare-helm.yaml
 
-- name: 3.2 helm-ingress-nginx.yaml
+- name: 3.3 helm-ingress-nginx.yaml
   include_tasks: helm-ingress-nginx.yaml
 
-- name: 3.3 helm-rancher-server.yaml
+- name: 3.4 helm-rancher-server.yaml
   include_tasks: helm-rancher-server.yaml

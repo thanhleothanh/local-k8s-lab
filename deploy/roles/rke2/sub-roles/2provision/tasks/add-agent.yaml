@@ -19,15 +19,15 @@
   when: inventory_hostname in groups['agents']
 
 - name: Enable and start RKE2 agent service
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: rke2-agent
     enabled: yes
   become: true
   when: inventory_hostname in groups['agents']
 
 - name: Enable and start RKE2 agent service
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: rke2-agent
-    state: started
+    state: reloaded
   become: true
   when: inventory_hostname in groups['agents']
